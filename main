@@ -1,0 +1,455 @@
+#include <map>
+#include <algorithm>
+#include <iostream>
+#include <vector>
+using namespace std;
+template <typename U>
+class data_user{
+  private:
+  bool cuenta;
+  bool cdt;
+  bool tarjeta;
+  bool credito;
+  int cuentan;
+  int cdtn;
+  int tarjetan;
+  int crediton;
+  string name;
+  public:
+  data_user(){
+      cuenta=false;
+      cdt=false;
+      tarjeta=false;
+      credito=false;
+  }
+  data_user(string n, int c, int cred, int cdtxd, int tarjetita){
+      name=n;
+      cdtn=cdtxd;
+      crediton=cred;
+      tarjetan=tarjetita;
+      cuentan=c;
+      if(cdtxd!=0){
+          
+      }
+  }
+  bool get_cuenta(){
+      return cuenta;
+  }
+    bool get_cdt(){
+      return cdt;
+  }
+    bool get_tarjeta(){
+      return tarjeta;
+  }
+    bool get_credito(){
+      return credito;
+  }
+  int get_cuentan(){
+      if(cuenta){
+          return cuentan;
+      }
+      else{
+          return 0;
+      }
+  }
+  int get_crediton(){
+      if(credito){
+          return crediton;
+      }
+      else{
+          return 0;
+      }
+  }
+  int get_tarjetan(){
+      if(tarjeta){
+          return tarjetan;
+      }
+      else{
+          return 0;
+      }
+  }
+  int get_cdtn(){
+      if(cdt){
+          return cdtn;
+      }
+      else{
+          return 0;
+      }
+  }
+  void set_name(string n){
+      name=n;
+  }
+  void set_cuenta(int n){
+      cuentan=n;
+      cuenta=true;
+  }
+  void set_cdt(int g){
+      cdtn=g;
+      cdt=true;
+  }
+  void set_tarjeta(int ingreso_mes){
+      if(ingreso_mes<1000000){
+          tarjeta=true;
+          tarjetan=1700000;
+      }
+      else{
+          if(ingreso_mes<2000000){
+              tarjetan=3400000;
+              tarjeta=true;
+          }
+          else{
+              if(ingreso_mes<3000000){
+                  tarjeta=true;
+                  tarjetan=5100000;
+              }
+              else{
+                  if(ingreso_mes<4000000){
+                      tarjeta=true;
+                      tarjetan=6800000;
+                  }
+                  else{
+                      if(ingreso_mes<5000000){
+                          tarjeta=true;
+                          tarjetan=8500000;
+                      }
+                      else{
+                          tarjeta=true;
+                          tarjetan=10000000;
+                      }
+                  }
+              }
+          }
+      }
+  }
+  void set_credito(int ingreso_mes){
+     if(ingreso_mes<1000000){
+          credito=true;
+          crediton=1700000;
+      }
+      else{
+          if(ingreso_mes<2000000){
+              crediton=3400000;
+              credito=true;
+          }
+          else{
+              if(ingreso_mes<3000000){
+                  credito=true;
+                  crediton=5100000;
+              }
+              else{
+                  if(ingreso_mes<4000000){
+                      credito=true;
+                      crediton=6800000;
+                  }
+                  else{
+                      if(ingreso_mes<5000000){
+                          credito=true;
+                          crediton=8500000;
+                      }
+                      else{
+                          credito=true;
+                          crediton=10000000;
+                      }
+                  }
+              }
+          }
+      }
+  }
+void check_posible_monto_tarjeta(int ingreso_mes){
+      if(ingreso_mes<1000000){
+          cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer una tarjeta con un cupo de: "<<1700000<<endl;
+      }
+      else{
+          if(ingreso_mes<2000000){
+              cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer una tarjeta con un cupo de: "<<3400000 <<endl;
+          }
+          else{
+              if(ingreso_mes<3000000){
+                  cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer una tarjeta con un cupo de: "<<5100000<<endl;
+              }
+              else{
+                  if(ingreso_mes<4000000){
+                      cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer una tarjeta con un cupo de: "<<6800000<<endl;
+                  }
+                  else{
+                      if(ingreso_mes<5000000){
+                          cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer una tarjeta con un cupo de: "<<8500000<<endl;
+                      }
+                      else{
+                          cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer una tarjeta con un cupo de: "<<10000000<<", que es el máximo cupo que le podemos ofrecer "<<endl;
+                      }
+                  }
+              }
+          }
+      }
+  string xd;
+  cout<<"conociendo esto, aun quiere obtener la tarjeta de crédito?"<<endl;
+  cin>>xd;
+  if(xd=="sí"){
+      set_tarjeta(ingreso_mes);
+  }
+}
+void expand_cdt(int cedula){
+    string xd;
+    int xddd;
+    if(cdt){
+        cout<<"usted tiene un cdt, en el cual tiene un monto de: "<<get_cdtn()<<endl;
+        abrir_usuario(cedula);
+    }else{
+        cout<<"usted no tiene un cdt con nosotros, le interesaria iniciar uno?(el monto minimo es de 150000)"<<endl;
+        cin>>xd;
+        if(xd=="sí"){
+            cout<<"maravilloso! cuanto quisiera ingresar en el cdt?"<<endl;
+            cin>>xddd;
+            if(xddd>14999){
+                set_cdt(xddd);
+                cout<<"listo! ya cuentas con un cdt por un valor de: "<<xddd;
+                
+            }else{
+                while(xddd<150000 and cdt==false){
+                cout<<"por favor inserte un valor igual o mayor a 150000"<<endl;
+                cin>>xddd;
+                if(xddd>149999){
+                    set_cdt(xddd);
+                    cout<<"listo! ya cuentas con un cdt por un valor de: "<<xddd;
+                }
+                }
+            }
+        }
+        else{
+            cout<<"bueno, no te preocupes, de inmediato te redirigiremos a la pagina principal de tu perfil"<<endl;
+        }
+    }
+    abrir_usuario(cedula);
+    
+}
+void expand_tarjeta(int cedula){
+    string xdxdxd;
+    int ingresito;
+    if(tarjeta){
+        cout<<"Usted cuenta con una tarjeta de crédito, la cual tiene un monto de: "<<get_tarjetan()<<endl;
+        abrir_usuario(cedula);
+    }else{
+        cout<<"Usted no cuenta con una tarjeta de crédito con nosotros, le interesaria solicitar una?"<<endl;
+        cin>>xdxdxd;
+        if(xdxdxd=="sí"){
+            cout<<"Perfecto! ahora para proceder, por favor cuentenos cual es su ingreso mensual(esta informacion la pedimos para poder informarle del monto que tendria su tarjeta)"<<endl;
+            cin>>ingresito;
+            check_posible_monto_tarjeta(ingresito);
+        }else{
+            cout<<"entendible, tenga un buen dia"<<endl;
+            abrir_usuario(cedula);
+        }
+    }
+}
+void expand_credito(int cedula){
+    int cuotas;
+    int sueldo;
+    string voluntad;
+    if(credito){
+        cout<<"usted tiene un crédito con nosotros de: "<<get_crediton()<<endl;
+        cout<<"para simular la paga del crédito, por favor inserte la cantidad de cuotas que podria interesarle pagar"<<endl;
+        cin>>cuotas;
+        cout<<"siendo asi, con el número de cuotas que eligio, tendria que pagar "<<cuotas<<" cuotas por un valor de: "<<get_crediton()/cuotas<<endl;
+        abrir_usuario(cedula);
+    }
+    else{
+        cout<<"usted no cuenta con un credito con nosotros, le interesaria solicitar una?"<<endl;
+        cin>>voluntad;
+        if(voluntad=="si"){
+            cout<<"Perfecto! ahora para proceder, por favor cuentenos cual es su ingreso mensual(esta informacion la pedimos para poder informarle del monto que podría brindarsele en el credito)"<<endl;
+            cin>>sueldo;
+            check_posible_monto_credito(sueldo);
+        }else{
+            cout<<"entendible, tenga un buen dia"<<endl;
+            abrir_usuario(cedula);
+        }
+    }
+}    
+void abrir_usuario(int cedula){
+    int opcion;
+    cout<<to_stringxd(cedula);
+    cout<<endl<<"1. cuenta de ahorros."<<endl<<"2. CDT."<<endl<<"3. Tarjeta de crédito"<<endl<<"4. Crédito"<<endl<<"5. Salir"<<endl<<"por favor seleccione cuál opción le interesaría"<<endl;
+    cin>>opcion;
+    if(opcion==1){
+        expand_cuenta(cedula);
+    }
+    else{
+        if(opcion==2){
+            expand_cdt(cedula);
+        }
+        else{
+            if(opcion==3){
+                expand_tarjeta(cedula);
+            }
+            else{
+                if(opcion==4){
+                    expand_credito(cedula);
+                }
+                else{
+                    if(opcion==5){
+                        cout<<"Hasta pronto"<<endl;
+                        exit;
+                    }else{
+                    cout<<"por favor inserte una opción valida"<<endl;
+                    abrir_usuario(cedula);
+                    }
+                }
+            }
+        }
+    }
+}
+void expand_cuenta(int cedula){
+    string xdxd;
+    int ingreso;
+    if(cuenta){
+        cout<<"Usted tiene una cuenta de ahorros con un valor de: "<<cuentan<<endl;
+    }
+    else{
+        cout<<"Usted no tiene una cuenta de ahorros con nosotros, estaría interesado en comenzar una?"<<endl;
+        cin>>xdxd;
+        if(xdxd=="si"){
+            cout<<"Genial!"<<endl<<"Estamos muy felices de tenerte con nosotros, por favor, para comenzar, cuánto quieres poner en la cuenta?"<<endl;
+            cin>>ingreso;
+            cout<<endl<<"Perfecto! tú tranquilo, ya nosotros nos encargamos del resto"<<endl;
+        }else{
+            cout<<"Entendible, que tenga un buen día";
+        }
+    }
+    abrir_usuario(cedula);
+}
+void check_posible_monto_credito(int ingreso_mes){
+    string xd;
+   if(ingreso_mes<1000000){
+          cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer un crédito por un valor de: "<<2100000<<endl;
+      }
+      else{
+          if(ingreso_mes<2000000){
+              cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer un crédito por un valor de: "<<4200000 <<endl;
+          }
+          else{
+              if(ingreso_mes<3000000){
+                  cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer un crédito por un valor de: "<<6300000<<endl;
+              }
+              else{
+                  if(ingreso_mes<4000000){
+                      cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer un crédito por un valor de: "<<8400000<<endl;
+                  }
+                  else{
+                      if(ingreso_mes<5000000){
+                          cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer un crédito por un valor de: "<<1050000<<endl;
+                      }
+                      else{
+                          cout<<"con su ingreso mensual de: "<<ingreso_mes<<" le podemos ofrecer un crédito por un valor de: "<<12000000<<", que es el máximo valor que le podemos ofrecer "<<endl;
+                      }
+                  }
+              }
+          }
+      }
+  
+  cout<<"conociendo esto, aun quiere solicitar el crédito?"<<endl;
+  cin>>xd;
+  if(xd=="si"){
+      set_credito(ingreso_mes);
+  } 
+}
+string to_stringxd(int cedula){
+    string s="";
+    s+="Nombre: "+name+"\\t";
+    s+="Cédula: "+to_string(cedula)+"\\t";
+    if(cuenta==true){
+        s=s+"este usuario tiene una cuenta de ahorros con un monto de: "+to_string(cuentan) + "\\t";
+    }
+    else{
+        s=s+"este usuario no tiene una cuenta de ahorros";
+    }
+    if(cdt==true){
+        s=s+"este usuario tiene un monto de "+to_string(cdtn)+"en un cdt \\t";
+    }
+    else{
+        s=s+"este usuario no tiene un cdt";
+    }
+    if(tarjeta==true){
+        s=s+"este usuario tiene una tarjeta de credito con un cupo de: "+to_string(tarjetan)+"\\t";
+    }
+    else{
+        s=s+"este usuario no tiene una tarjeta de crédito \\t";
+    }
+    if(credito==true){
+        s=s+"este usuario tiene un crédito por una cantidad de: "+to_string(crediton)+"\\t";
+    }
+    else{
+        s=s+"este usuario no tiene un crédito \\t";
+    }
+    return s;
+}
+friend std::ostream& operator<<(std::ostream& os,data_user<U>& b){
+        return os << b.to_string();
+}
+};
+/*string readFileIntoString(const string& path) {
+  auto ss = ostringstream{};
+  ifstream input_file(path);
+  if (!input_file.is_open()) {
+    cerr << "Could not open the file - '" << path << "'" << endl;
+    exit(EXIT_FAILURE);
+  }
+  ss << input_file.rdbuf();
+  return ss.str();
+}*/
+//nombrecuentacreditocdttarjeta
+int main()
+{
+    
+    int cedulitaxd;
+    data_user<int> xddd;
+    map <int,data_user<int>>xd;
+    xddd.set_name("test_name");
+    xddd.set_credito(100000);
+    xddd.set_cuenta(100000000);
+    xddd.set_tarjeta(20000000);
+    xd[123]=xddd;
+    cout<<"BIENVENIDO A LA INTERFAZ DEL BANCO Rozariobīzu, para comenzar, por favor ingrese su número de cédula(no se preocupe si no es cliente nuestro, nosotros nos encargamos de todo)"<<endl;
+    cin>>cedulitaxd;
+    if(xd.count(cedulitaxd)){
+        xd[cedulitaxd].abrir_usuario(cedulitaxd);
+    }
+    else{
+        int eleccion;
+        int c;
+        cout<<"Vaya!, parece que no eres parte de nuestro banco, te gustaria comenzar algún producto con nosotros?"<<endl;
+        string rtaxd;
+        cin>>rtaxd;
+        if(rtaxd=="si"){
+            cout<<"maravilloso! en Rozariobīzu estamos muy felices de tenerte con nosotros, para comenzar, cuentanos como te llamas?"<<endl;
+            string n;
+            cin>>n;
+            data_user<int> newxd;
+            newxd.set_name(n);
+            cout<<"Muy bien, ahora para continuar indícanos cuál de nuestros productos quisieras adquirir?"<<endl<<"1. cuenta de ahorros."<<endl<<"2. cdt."<<endl<<"3. tarjeta de crédito."<<endl<<"4. crédito."<<endl<<"5. Por el momento no quiero ningún producto"<<endl;
+            cin>>eleccion;
+            if(eleccion==1){
+                cout<<"Muy bien, ahora por favor indícanos con qué valor quisieras comenzar tu nueva cuenta de ahorros"<<endl;
+                cin>>c;
+                cout<<endl;
+                newxd.set_cuenta(c);
+                cout<<"ya que cuentas con un producto nuestro, vamos a redirigirte a la pagina de tu perfil, donde podras solicitar crear los servicios que quieras o bien consultar los que ya tienes"<<endl;
+                newxd.abrir_usuario(cedulitaxd);
+            }else{
+                if(eleccion==2){
+                    cout<<"perfecto, vamos a crear tu nuevo cdt, con qué valor quisieras comenzarlo? recuerda que como mínimo para un cdt debes poner 150000"<<endl;
+                    cin>>c;
+                    while(c<150000 and c!=0){
+                    cout<<"vaya, parece que no llegas a la suma mínima para crear un cdt, inserta una suma de al menos 150.000 para abrir el cdt, o si prefieres no crearlo, digita 0"<<endl;    
+                    cin>>c;
+                    }
+                    if(c==0){
+                        cout<<"Está bien, no hay problema, te redirigiremos a la pagina de tu perfil, donde podras administrar lo que ya tienes o crear productos nuevos"<<endl;
+                        newxd.abrir_usuario(cedulitaxd);
+                    }
+                }
+            }
+        }
+    }
+    return 0;
+    }
